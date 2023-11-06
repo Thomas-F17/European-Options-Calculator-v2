@@ -9,35 +9,29 @@ document.getElementById("calculate").addEventListener("click", function () {
     const borrowCost = parseFloat(document.getElementById("borrow-cost").value);
     const pricingMethod = document.getElementById("pricing-method").value;
 
-    // Implement option pricing logic based on the selected pricing method
-    let optionPrice = 0;
-    let delta = 0;
-    let gamma = 0;
-    let theta = 0;
-    let vega = 0;
-    let rho = 0;
+    let result;
 
     switch (pricingMethod) {
         case "black-scholes-discrete":
-            // Calculate option price and Greeks using Black-Scholes (Discrete)
-            [optionPrice, delta, gamma, theta, vega, rho] = calculateBlackScholesDiscrete(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost);
+            // Assign the result object using Black-Scholes (Discrete)
+            result = calculateBlackScholesDiscrete(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost);
             break;
         case "black-scholes-continuous":
-            // Calculate option price and Greeks using Black-Scholes (Continuous)
-            [optionPrice, delta, gamma, theta, vega, rho] = calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost);
+            // Assign the result object using Black-Scholes (Continuous)
+            result = calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost);
             break;
         default:
-            optionPrice = "Invalid pricing method";
-            break;
+            alert("Invalid pricing method");
+            return; // Exit the function if the pricing method is invalid
     }
 
-    // Display the calculated option price and Greeks
-    document.getElementById("option-price").textContent = optionPrice.toFixed(2);
-    document.getElementById("delta").textContent = delta.toFixed(4);
-    document.getElementById("gamma").textContent = gamma.toFixed(4);
-    document.getElementById("theta").textContent = theta.toFixed(4);
-    document.getElementById("vega").textContent = vega.toFixed(4);
-    document.getElementById("rho").textContent = rho.toFixed(4);
+    // Display the calculated option price and Greeks using the result object
+    document.getElementById("option-price").textContent = result.optionPrice;
+    document.getElementById("delta").textContent = result.delta;
+    document.getElementById("gamma").textContent = result.gamma;
+    document.getElementById("theta").textContent = result.theta;
+    document.getElementById("vega").textContent = result.vega;
+    document.getElementById("rho").textContent = result.rho;
 });
 
 // The cumulative distribution function for a standard normal distribution
@@ -156,9 +150,7 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
   
   // Add event listeners for DOMContentLoaded and other events that you handle in your application
 document.addEventListener('DOMContentLoaded', function() {
-  // Event listener for the calculate button
-  document.getElementById('calculate').addEventListener('click', function() {
-  });
+
 
   // Logic for the theme switch
   var themeSwitch = document.getElementById('checkbox');
