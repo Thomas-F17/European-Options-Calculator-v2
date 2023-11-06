@@ -4,8 +4,8 @@ document.getElementById("calculate").addEventListener("click", function () {
     const strikePrice = parseFloat(document.getElementById("strike-price").value);
     const timeToExpiration = parseFloat(document.getElementById("time-to-expiration").value);
     const volatility = parseFloat(document.getElementById("volatility").value);
-    const interestRate = parseFloat(document.getElementById("interest-rate").value);
-    const dividend = parseFloat(document.getElementById("dividend").value);
+    const riskFreeRate = parseFloat(document.getElementById("interest-rate").value);
+    const dividendYield = parseFloat(document.getElementById("dividend").value);
     const borrowCost = parseFloat(document.getElementById("borrow-cost").value);
     const pricingMethod = document.getElementById("pricing-method").value;
 
@@ -20,11 +20,11 @@ document.getElementById("calculate").addEventListener("click", function () {
     switch (pricingMethod) {
         case "black-scholes-discrete":
             // Calculate option price and Greeks using Black-Scholes (Discrete)
-            [optionPrice, delta, gamma, theta, vega, rho] = calculateBlackScholesDiscrete(optionType, stockPrice, strikePrice, timeToExpiration, volatility, interestRate, dividend);
+            [optionPrice, delta, gamma, theta, vega, rho] = calculateBlackScholesDiscrete(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost);
             break;
         case "black-scholes-continuous":
             // Calculate option price and Greeks using Black-Scholes (Continuous)
-            [optionPrice, delta, gamma, theta, vega, rho] = calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, timeToExpiration, volatility, interestRate, dividend);
+            [optionPrice, delta, gamma, theta, vega, rho] = calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost);
             break;
         default:
             optionPrice = "Invalid pricing method";
@@ -98,11 +98,21 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
     return { optionPrice: optionPrice.toFixed(2), delta: delta.toFixed(4), gamma: gamma.toFixed(4), theta: theta.toFixed(4), vega: vega.toFixed(4), rho: rho.toFixed(4) };
   }
 
-  function calculateBlackScholesDiscrete(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost, discreteDividends) {
-    // Calculate Black-Scholes (Discrete) option price, Delta, Gamma, Theta, Vega, and Rho
+  function calculateBlackScholesDiscrete(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost) {
     // Adjust the risk-free rate to include the borrow cost
     var adjustedRiskFreeRate = riskFreeRate - borrowCost;
-  
+
+    // Convert continuous dividend yield to discrete dividends (assuming quarterly payments)
+    var quarterlyDividend = stockPrice * dividendYield / 4;
+    var discreteDividends = [];
+    for (var i = 1; i <= 4; i++) {
+        var timeToDividend = i * 0.25;
+        // Ensure the dividend payment is within the option's time to expiration
+        if (timeToDividend <= timeToExpiration) {
+            discreteDividends.push({ amount: quarterlyDividend, timeToDividend: timeToDividend });
+        }
+    }
+
     // Discount the stock price by the present value of discrete dividends
     var presentValueDividends = discreteDividends.map(function(div) {
       return div.amount / Math.pow(1 + adjustedRiskFreeRate, div.timeToDividend);
@@ -110,11 +120,11 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
       return acc + val;
     }, 0);
     var adjustedStockPrice = stockPrice - presentValueDividends;
-  
+
     // Calculate d1 and d2 using the adjusted stock price and risk-free rate
     var d1 = (Math.log(adjustedStockPrice / strikePrice) + (adjustedRiskFreeRate + 0.5 * volatility * volatility) * timeToExpiration) / (volatility * Math.sqrt(timeToExpiration));
     var d2 = d1 - volatility * Math.sqrt(timeToExpiration);
-  
+
     // Greeks calculations are similar to the continuous model but use adjusted stock price
     var delta, gamma, theta, vega, rho;
     if (optionType === "call") {
@@ -142,8 +152,8 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
   
     // Return the option price and Greeks
     return { optionPrice: optionPrice.toFixed(2), delta: delta.toFixed(4), gamma: gamma.toFixed(4), theta: theta.toFixed(4), vega: vega.toFixed(4), rho: rho.toFixed(4) };
-  }
-
+}
+  
   // Add event listeners for DOMContentLoaded and other events that you handle in your application
 document.addEventListener('DOMContentLoaded', function() {
   // Event listener for the calculate button
