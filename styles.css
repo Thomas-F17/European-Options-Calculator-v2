@@ -8,12 +8,6 @@ body.theme-dark {
     color: #f0f0f0;
 }
 
-body.theme-dark input,
-body.theme-dark select {
-    background-color: #555; 
-    color: #f0f0f0; 
-    border-color: #777;
-
 .calculator {
     max-width: 600px;
     margin: 50px auto;
@@ -31,7 +25,7 @@ body.theme-dark select {
 /* Style for the day/night mode toggle switch */
 .theme-switch-wrapper {
     display: flex;
-    align-items: flex-start; 
+    align-items: flex-start;
     justify-content: flex-start;
     margin-bottom: 20px;
 }
@@ -157,4 +151,3 @@ p {
 span {
     font-weight: bold;
 }
-
