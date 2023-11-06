@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Options Pricing Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="theme-light">
+    <div class="calculator">
+        <h1>European Options Pricer</h1>
+
+        <!-- Day/Night Mode Toggle -->
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+            <em>Enable Dark Mode!</em>
+        </div>
+
+        <div class="input-group">
+            <label for="option-type">Option Type:</label>
+            <select id="option-type">
+                <option value="call">Call Option</option>
+                <option value="put">Put Option</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="stock-price">Stock Price:</label>
+            <input type="number" id="stock-price">
+        </div>
+        <div class="input-group">
+            <label for="strike-price">Strike Price:</label>
+            <input type="number" id="strike-price">
+        </div>
+        <div class="input-group">
+            <label for="time-to-expiration">Time to Maturity (in years):</label>
+            <input type="number" id="time-to-expiration">
+        </div>
+        <div class="input-group">
+            <label for="volatility">Volatility (in percentage):</label>
+            <input type="number" id="volatility">
+        </div>
+        <div class="input-group">
+            <label for="interest-rate">Interest Rate (in percentage):</label>
+            <input type="number" id="interest-rate">
+        </div>
+        <div class="input-group">
+            <label for="dividend">Dividend Yield (in percentage):</label>
+            <input type="number" id="dividend">
+        </div>
+        <div class="input-group">
+            <label for="borrow-cost">Borrow Cost (% p.a.):</label>
+            <input type="number" id="borrow-cost" placeholder="Enter annual borrow cost (default = 0)">
+        </div>
+        <div class="input-group">
+            <label for="pricing-method">Pricing Model:</label>
+            <select id="pricing-method">
+                <option value="black-scholes-continuous">Black-Scholes (Continuous)</option>
+            </select>
+        </div>
+        <button id="calculate">Calculate</button>
+        <div id="results">
+            <p>Option Price: <span id="option-price">N/A</span></p>
+            <!-- Add the Greeks below the option price -->
+            <p>Delta: <span id="delta">N/A</span></p>
+            <p>Gamma: <span id="gamma">N/A</span></p>
+            <p>Theta: <span id="theta">N/A</span></p>
+            <p>Vega: <span id="vega">N/A</span></p>
+            <p>Rho: <span id="rho">N/A</span></p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for handling the theme switch and form interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle theme switch
+            var themeSwitch = document.getElementById('checkbox');
+            themeSwitch.addEventListener('change', function(event) {
+                if (event.target.checked) {
+                    document.body.classList.replace('theme-light', 'theme-dark');
+                } else {
+                    document.body.classList.replace('theme-dark', 'theme-light');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
