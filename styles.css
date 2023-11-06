@@ -25,8 +25,8 @@ body.theme-dark {
 /* Style for the day/night mode toggle switch */
 .theme-switch-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
     margin-bottom: 20px;
 }
 
