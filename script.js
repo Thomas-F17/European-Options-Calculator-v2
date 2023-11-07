@@ -36,16 +36,22 @@ document.getElementById("calculate").addEventListener("click", function () {
 
 // The cumulative distribution function for a standard normal distribution
 function normDist(x) {
-    var a1, a2, a3, a4 ,a5, k;
-    a1 =  0.254829592;
-    a2 = -0.284496736;
-    a3 =  1.421413741;
-    a4 = -1.453152027;
-    a5 =  1.061405429;
-    k = 1.0 / (1.0 + 0.2316419 * Math.abs(x));
-    var value = 1.0 - ((a1*k + a2*k*k + a3*Math.pow(k,3) + a4*Math.pow(k,4) + a5*Math.pow(k,5)) * Math.exp(-x*x / 2.0)) / Math.sqrt(2.0 * Math.PI);
-    return (x < 0.0) ? 1.0 - value : value;
+  const a1 = 0.31938153;
+  const a2 = -0.356563782;
+  const a3 = 1.781477937;
+  const a4 = -1.821255978;
+  const a5 = 1.330274429;
+  const p = 0.2316419;
+  const c = 0.39894228;
+
+  if (x >= 0) {
+      const k = 1.0 / (1.0 + p * x);
+      return (1.0 - c * Math.exp(-x * x / 2.0) * k *
+          (k * (k * (k * (k * a5 + a4) + a3) + a2) + a1));
+  } else {
+      return 1.0 - normDist(-x);
   }
+}
   
   // The probability density function for a standard normal distribution
   function normPDF(x) {
