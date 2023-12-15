@@ -29,31 +29,31 @@
         </div>
         <div class="input-group">
             <label for="stock-price">Stock Price:</label>
-            <input type="number" id="stock-price">
+            <input type="number" id="stock-price" value="100">
         </div>
         <div class="input-group">
             <label for="strike-price">Strike Price:</label>
-            <input type="number" id="strike-price">
+            <input type="number" id="strike-price" value="100">
         </div>
         <div class="input-group">
             <label for="time-to-expiration">Time to Maturity (in years):</label>
-            <input type="number" id="time-to-expiration">
+            <input type="number" id="time-to-expiration" value="1">
         </div>
         <div class="input-group">
             <label for="volatility">Volatility (in percentage):</label>
-            <input type="number" id="volatility">
+            <input type="number" id="volatility" value="0.2">
         </div>
         <div class="input-group">
             <label for="interest-rate">Interest Rate (in percentage):</label>
-            <input type="number" id="interest-rate">
+            <input type="number" id="interest-rate" value="0.05">
         </div>
         <div class="input-group">
             <label for="dividend">Dividend Yield (in percentage):</label>
-            <input type="number" id="dividend">
+            <input type="number" id="dividend" value="0">
         </div>
         <div class="input-group">
             <label for="borrow-cost">Borrow Cost (% p.a.):</label>
-            <input type="number" id="borrow-cost" placeholder="Enter annual borrow cost (default = 0)">
+            <input type="number" id="borrow-cost" value="0">
         </div>
         <div class="input-group">
             <label for="pricing-method">Pricing Model:</label>
@@ -68,8 +68,8 @@
             <!-- Add the Greeks below the option price -->
             <p>Delta: <span id="delta">N/A</span></p>
             <p>Gamma: <span id="gamma">N/A</span></p>
-            <p>Theta: <span id="theta">N/A</span></p>
             <p>Vega: <span id="vega">N/A</span></p>
+            <p>Theta: <span id="theta">N/A</span></p>
             <p>Rho: <span id="rho">N/A</span></p>
         </div>
     </div>
