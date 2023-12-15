@@ -75,16 +75,16 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
       var callDelta = Math.exp(-dividendYield * timeToExpiration) * normDist(d1);
       delta = callDelta;
       gamma = normPDF(d1) * Math.exp(-dividendYield * timeToExpiration) / (stockPrice * volatility * Math.sqrt(timeToExpiration));
-      theta = -stockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) - adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2) + dividendYield * stockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(d1);
-      vega = stockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
-      rho = strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2);
+      theta = 1/365 * (-stockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) - adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2) + dividendYield * stockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(d1));
+      vega = 0.01 * stockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
+      rho = 0.01 * strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2);
     } else if (optionType === "put") {
       var putDelta = -Math.exp(-dividendYield * timeToExpiration) * normDist(-d1);
       delta = putDelta;
       gamma = normPDF(d1) * Math.exp(-dividendYield * timeToExpiration) / (stockPrice * volatility * Math.sqrt(timeToExpiration));
-      theta = -stockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) + adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2) - dividendYield * stockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(-d1);
-      vega = stockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
-      rho = -strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2);
+      theta = 1/365 * (-stockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) + adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2) - dividendYield * stockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(-d1));
+      vega = 0.01 * stockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
+      rho = 0.01 * -strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2);
     } else {
       throw new Error("Invalid option type");
     }
@@ -131,16 +131,16 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
         var callDelta = Math.exp(-dividendYield * timeToExpiration) * normDist(d1);
         delta = callDelta;
         gamma = normPDF(d1) * Math.exp(-dividendYield * timeToExpiration) / (adjustedStockPrice * volatility * Math.sqrt(timeToExpiration));
-        theta = -adjustedStockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) - adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2) + dividendYield * adjustedStockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(d1);
-        vega = adjustedStockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
-        rho = strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2);
+        theta = 1/365 * (-adjustedStockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) - adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2) + dividendYield * adjustedStockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(d1));
+        vega = 0.01 * adjustedStockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
+        rho = 0.01 * strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(d2);
       } else if (optionType === "put") {
         var putDelta = -Math.exp(-dividendYield * timeToExpiration) * normDist(-d1);
         delta = putDelta;
         gamma = normPDF(d1) * Math.exp(-dividendYield * timeToExpiration) / (adjustedStockPrice * volatility * Math.sqrt(timeToExpiration));
-        theta = -adjustedStockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) + adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2) - dividendYield * adjustedStockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(-d1);
-        vega = stockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
-        rho = -strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2);
+        theta = 1/365 * (-adjustedStockPrice * normPDF(d1) * volatility * Math.exp(-dividendYield * timeToExpiration) / (2 * Math.sqrt(timeToExpiration)) + adjustedRiskFreeRate * strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2) - dividendYield * adjustedStockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(-d1));
+        vega = 0.01 * stockPrice * Math.exp(-dividendYield * timeToExpiration) * Math.sqrt(timeToExpiration) * normPDF(d1);
+        rho = 0.01 * -strikePrice * timeToExpiration * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2);
       } else {
         throw new Error("Invalid option type");
       }
