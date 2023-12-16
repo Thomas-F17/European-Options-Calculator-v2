@@ -95,7 +95,7 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
       : strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2) - stockPrice * Math.exp(-dividendYield * timeToExpiration) * normDist(-d1);
   
     // Return the option price and Greeks
-    return { optionPrice: optionPrice.toFixed(2), delta: delta.toFixed(4), gamma: gamma.toFixed(4), theta: theta.toFixed(4), vega: vega.toFixed(4), rho: rho.toFixed(4) };
+    return { optionPrice: optionPrice.toFixed(4), delta: delta.toFixed(4), gamma: gamma.toFixed(4), theta: theta.toFixed(4), vega: vega.toFixed(4), rho: rho.toFixed(4) };
   }
 
   function calculateBlackScholesDiscrete(optionType, stockPrice, strikePrice, timeToExpiration, volatility, riskFreeRate, dividendYield, borrowCost) {
@@ -151,7 +151,7 @@ function calculateBlackScholesContinuous(optionType, stockPrice, strikePrice, ti
       : strikePrice * Math.exp(-adjustedRiskFreeRate * timeToExpiration) * normDist(-d2) - adjustedStockPrice * normDist(-d1);
   
     // Return the option price and Greeks
-    return { optionPrice: optionPrice.toFixed(2), delta: delta.toFixed(4), gamma: gamma.toFixed(4), theta: theta.toFixed(4), vega: vega.toFixed(4), rho: rho.toFixed(4) };
+    return { optionPrice: optionPrice.toFixed(4), delta: delta.toFixed(4), gamma: gamma.toFixed(4), theta: theta.toFixed(4), vega: vega.toFixed(4), rho: rho.toFixed(4) };
 }
   
   // Add event listeners for DOMContentLoaded and other events that you handle in your application
