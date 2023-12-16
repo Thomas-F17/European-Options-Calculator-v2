@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'Proggy';
+    src: url('ProggyClean.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html *
+{
+   font-family: 'ProggyClean', monospace !important;
+}
+
 body.theme-light {
     background-color: #f0f0f0;
     color: #333;
